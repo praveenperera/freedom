@@ -1,5 +1,6 @@
 defmodule FreedomWeb.LayoutView do
   use FreedomWeb, :view
+  import Phoenix.LiveView.Helpers
 
   def active(conn, string, active, inactive \\ "") do
     do_active(conn.request_path, string, active, inactive)

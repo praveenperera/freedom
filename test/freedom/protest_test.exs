@@ -116,4 +116,62 @@ defmodule Freedom.ProtestTest do
       assert %Ecto.Changeset{} = Protest.change_city(city)
     end
   end
+
+  describe "shifts" do
+    alias Freedom.Protest.Shift
+
+    import Freedom.ProtestFixtures
+
+    @invalid_attrs %{end: nil, start: nil, vehicle: nil}
+
+    test "list_shifts/0 returns all shifts" do
+      shift = shift_fixture()
+      assert Protest.list_shifts() == [shift]
+    end
+
+    test "get_shift!/1 returns the shift with given id" do
+      shift = shift_fixture()
+      assert Protest.get_shift!(shift.id) == shift
+    end
+
+    test "create_shift/1 with valid data creates a shift" do
+      valid_attrs = %{end: ~N[2022-01-31 17:24:00], start: ~N[2022-01-31 17:24:00], vehicle: "some vehicle"}
+
+      assert {:ok, %Shift{} = shift} = Protest.create_shift(valid_attrs)
+      assert shift.end == ~N[2022-01-31 17:24:00]
+      assert shift.start == ~N[2022-01-31 17:24:00]
+      assert shift.vehicle == "some vehicle"
+    end
+
+    test "create_shift/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Protest.create_shift(@invalid_attrs)
+    end
+
+    test "update_shift/2 with valid data updates the shift" do
+      shift = shift_fixture()
+      update_attrs = %{end: ~N[2022-02-01 17:24:00], start: ~N[2022-02-01 17:24:00], vehicle: "some updated vehicle"}
+
+      assert {:ok, %Shift{} = shift} = Protest.update_shift(shift, update_attrs)
+      assert shift.end == ~N[2022-02-01 17:24:00]
+      assert shift.start == ~N[2022-02-01 17:24:00]
+      assert shift.vehicle == "some updated vehicle"
+    end
+
+    test "update_shift/2 with invalid data returns error changeset" do
+      shift = shift_fixture()
+      assert {:error, %Ecto.Changeset{}} = Protest.update_shift(shift, @invalid_attrs)
+      assert shift == Protest.get_shift!(shift.id)
+    end
+
+    test "delete_shift/1 deletes the shift" do
+      shift = shift_fixture()
+      assert {:ok, %Shift{}} = Protest.delete_shift(shift)
+      assert_raise Ecto.NoResultsError, fn -> Protest.get_shift!(shift.id) end
+    end
+
+    test "change_shift/1 returns a shift changeset" do
+      shift = shift_fixture()
+      assert %Ecto.Changeset{} = Protest.change_shift(shift)
+    end
+  end
 end

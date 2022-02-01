@@ -34,4 +34,20 @@ defmodule Freedom.ProtestFixtures do
 
     city
   end
+
+  @doc """
+  Generate a shift.
+  """
+  def shift_fixture(attrs \\ %{}) do
+    {:ok, shift} =
+      attrs
+      |> Enum.into(%{
+        end: ~N[2022-01-31 17:24:00],
+        start: ~N[2022-01-31 17:24:00],
+        vehicle: "some vehicle"
+      })
+      |> Freedom.Protest.create_shift()
+
+    shift
+  end
 end

@@ -1,0 +1,32 @@
+<h1>Show Shift</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal FreedomWeb.ShiftLive.FormComponent,
+    id: @shift.id,
+    title: @page_title,
+    action: @live_action,
+    shift: @shift,
+    return_to: Routes.shift_show_path(@socket, :show, @shift) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Start:</strong>
+    <%= @shift.start %>
+  </li>
+
+  <li>
+    <strong>End:</strong>
+    <%= @shift.end %>
+  </li>
+
+  <li>
+    <strong>Vehicle:</strong>
+    <%= @shift.vehicle %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.shift_show_path(@socket, :edit, @shift), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.shift_index_path(@socket, :index) %></span>

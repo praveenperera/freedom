@@ -39,6 +39,11 @@ defmodule FreedomWeb.Router do
     pipe_through [:browser]
 
     get "/", PageController, :index
+
+    live "/shifts", ShiftLive.Index, :index
+    live "/shifts/new", ShiftLive.Index, :new
+
+    live "/shifts/:id", ShiftLive.Show, :show
   end
 
   if Mix.env() == :dev do

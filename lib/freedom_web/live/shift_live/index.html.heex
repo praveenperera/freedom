@@ -1,0 +1,39 @@
+<h1>Listing Shifts</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal FreedomWeb.ShiftLive.FormComponent,
+    id: @shift.id || :new,
+    title: @page_title,
+    action: @live_action,
+    shift: @shift,
+    return_to: Routes.shift_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Start</th>
+      <th>End</th>
+      <th>Vehicle</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="shifts">
+    <%= for shift <- @shifts do %>
+      <tr id={"shift-#{shift.id}"}>
+        <td><%= shift.start %></td>
+        <td><%= shift.end %></td>
+        <td><%= shift.vehicle %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.shift_show_path(@socket, :show, shift) %></span>
+          <span><%= live_patch "Edit", to: Routes.shift_index_path(@socket, :edit, shift) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: shift.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Shift", to: Routes.shift_index_path(@socket, :new) %></span>

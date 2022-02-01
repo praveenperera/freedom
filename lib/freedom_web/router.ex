@@ -39,9 +39,10 @@ defmodule FreedomWeb.Router do
     pipe_through [:browser]
 
     get "/", PageController, :index
+    get "/shifts", PageController, :edmonton
 
-    live "/shifts", ShiftLive.Index, :index
-    live "/shifts/new", ShiftLive.Index, :new
+    live "/shifts/:city", ShiftLive.Index, :index
+    live "/shifts/:city/new", ShiftLive.Index, :new
 
     live "/shifts/:id", ShiftLive.Show, :show
   end

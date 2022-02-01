@@ -20,17 +20,17 @@ config :freedom, FreedomWeb.Endpoint,
       "--input=css/app.css",
       "--output=../priv/static/assets/app.css",
       "--postcss",
+      "--watch",
       cd: Path.expand("../assets", __DIR__)
     ]
   ]
 
-#
 config :freedom, FreedomWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/freedom_web/{live,views}/.*(ex)$",
+      ~r"lib/freedom_web/(live|views)/.*(ex)$",
       ~r"lib/freedom_web/templates/.*(eex)$"
     ]
   ]

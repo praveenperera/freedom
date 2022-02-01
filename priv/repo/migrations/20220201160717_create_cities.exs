@@ -6,8 +6,11 @@ defmodule Freedom.Repo.Migrations.CreateCities do
       add :name, :string
       add :timezone, :string
       add :province, :string
+      add :slug, :string
 
       timestamps()
     end
+
+    create index(:cities, :slug, unique: true)
   end
 end

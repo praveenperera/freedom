@@ -1,4 +1,5 @@
 const colors = require("tailwindcss/colors");
+const defaultTheme = require('tailwindcss/defaultTheme')
 
 const screen = {
   "1/2-screen": "50vh",
@@ -68,7 +69,6 @@ module.exports = {
     "../**/*.html.leex",
     "../**/*.html.heex",
     "./js/**/*.js",
-    "./js/**/*.re",
     "../**/*_view.ex",
   ],
   darkMode: "media",
@@ -79,6 +79,9 @@ module.exports = {
       },
       margin: {
         "01": "0.1rem",
+      },
+      fontFamily: {
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
       boxShadow: {},
       zIndex: {

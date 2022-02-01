@@ -40,15 +40,18 @@ defmodule Freedom.MixProject do
       {:phoenix, "~> 1.6"},
       {:phoenix_pubsub, "~> 2.0"},
       {:phoenix_ecto, "~> 4.4"},
-      {:phoenix_html, "~> 3.1"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:plug_cowboy, "~> 2.1"},
+      {:phoenix_html, "~> 3.2"},
+      {:phoenix_live_reload, "~> 1.3", only: :dev},
+      {:plug_cowboy, "~> 2.5"},
       {:esbuild, "~> 0.2", runtime: Mix.env() == :dev},
 
       # db
-      {:ecto_sql, "~> 3.0"},
+      {:ecto_sql, "~> 3.7"},
       {:ecto_enum, "~> 1.4"},
       {:postgrex, ">= 0.0.0"},
+
+      # utils
+      {:typed_struct, "~> 0.2.1"},
 
       # apis
       {:certifi, "~> 2.4"},
@@ -69,7 +72,7 @@ defmodule Freedom.MixProject do
 
       # liveview
       {:phoenix_live_view, "~> 0.17"},
-      {:phoenix_live_dashboard, "~> 0.5"},
+      {:phoenix_live_dashboard, "~> 0.6.3"},
       {:ecto_psql_extras, "~> 0.2"},
 
       # metrics

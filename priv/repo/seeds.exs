@@ -9,3 +9,9 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+Freedom.Repo.insert!(%Freedom.Protest.City{
+  name: "Edmonton",
+  province: "Alberta",
+  timezone: "America/Edmonton"
+})

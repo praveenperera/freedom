@@ -26,6 +26,11 @@ defmodule Freedom.Protest.Shift do
   end
 
   ### QUERIES
+  def in_city(query \\ Shift, city_id) do
+    query
+    |> where(city_id: ^city_id)
+  end
+
   def shifts_between(query \\ Shift, start_datetime, end_datetime) do
     query
     |> where([s], s.start >= ^start_datetime)

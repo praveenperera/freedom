@@ -5,5 +5,6 @@ defmodule FreedomWeb.PageController do
     render(conn, "index.html")
   end
 
-  def edmonton(conn, _params), do: redirect(conn, to: "/shifts/edmonton")
+  def edmonton(conn, _params),
+    do: redirect(conn, to: Routes.shift_index_path(conn, :index, :edmonton))
 end

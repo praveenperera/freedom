@@ -19,8 +19,8 @@
           <div class="flex justify-between h-16">
             <div class="flex">
               <div class="flex items-center flex-shrink-0">
-                <%= img_tag(Routes.static_path(@conn, "/images/logo_mark_white.svg"), alt: "Logo", class: "block h-8 w-auto lg:hidden" ) %>
-                <%= img_tag(Routes.static_path(@conn, "/images/logo_white.svg"), alt: "Logo", class: "hidden h-8 w-auto lg:block" ) %>
+                <%# <%= img_tag(Routes.static_path(@conn, "/images/logo_mark_white.svg"), alt: "Logo", class: "block h-8 w-auto lg:hidden" ) %>
+                <%# <%= img_tag(Routes.static_path(@conn, "/images/logo_white.svg"), alt: "Logo", class: "hidden h-8 w-auto lg:block" ) %>
               </div>
               <div class="hidden sm:flex sm:ml-6">
                 <a href="/"

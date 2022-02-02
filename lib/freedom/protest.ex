@@ -31,6 +31,26 @@ defmodule Freedom.Protest do
 
   def get_shift!(id), do: Repo.get!(Shift, id)
 
+  def total_shifts_for_day(city_id, %Date{} = date) do
+    start_datetime = DateTime.new!(date, Time.new!(0, 0, 0))
+    end_datetime = DateTime.new!(date, Time.new!(23, 59, 59))
+
+    Shift
+    |> Shift.shifts_between(start_datetime, end_datetime)
+    |> select([s], count(s.id))
+    |> Repo.one()
+  end
+
+  def get_shift_between(city_id, %Date{} = date, start_time, end_time) do
+    start_datetime = DateTime.new!(date, start_time)
+    end_datetime = DateTime.new!(date, end_time)
+
+    Shift
+    |> Shift.in_city(city_id)
+    |> Shift.shifts_between(start_datetime, end_datetime)
+    |> Repo.all()
+  end
+
   def book_shift_for_day(%ShiftForDay{} = params) do
     params
     |> Map.from_struct()

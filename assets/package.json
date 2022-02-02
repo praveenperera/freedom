@@ -2,7 +2,8 @@
   "repository": {},
   "license": "MIT",
   "scripts": {
-    "deploy": "NODE_ENV=production postcss css/app.css -o ../priv/static/assets/app.css"
+    "deploy": "NODE_ENV=production postcss css/app.css -o ../priv/static/assets/app.css",
+    "prettier": "prettier --config ../prettier.config.js ../lib/**/*.heex ../assets --write"
   },
   "dependencies": {
     "@tailwindcss/aspect-ratio": "^0.4.0",

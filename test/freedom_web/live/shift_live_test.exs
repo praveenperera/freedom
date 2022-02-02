@@ -4,9 +4,21 @@ defmodule FreedomWeb.ShiftLiveTest do
   import Phoenix.LiveViewTest
   import Freedom.ProtestFixtures
 
-  @create_attrs %{end: %{day: 31, hour: 17, minute: 24, month: 1, year: 2022}, start: %{day: 31, hour: 17, minute: 24, month: 1, year: 2022}, vehicle: "some vehicle"}
-  @update_attrs %{end: %{day: 1, hour: 17, minute: 24, month: 2, year: 2022}, start: %{day: 1, hour: 17, minute: 24, month: 2, year: 2022}, vehicle: "some updated vehicle"}
-  @invalid_attrs %{end: %{day: 30, hour: 17, minute: 24, month: 2, year: 2022}, start: %{day: 30, hour: 17, minute: 24, month: 2, year: 2022}, vehicle: nil}
+  @create_attrs %{
+    end: %{day: 31, hour: 17, minute: 24, month: 1, year: 2022},
+    start: %{day: 31, hour: 17, minute: 24, month: 1, year: 2022},
+    vehicle: "some vehicle"
+  }
+  @update_attrs %{
+    end: %{day: 1, hour: 17, minute: 24, month: 2, year: 2022},
+    start: %{day: 1, hour: 17, minute: 24, month: 2, year: 2022},
+    vehicle: "some updated vehicle"
+  }
+  @invalid_attrs %{
+    end: %{day: 30, hour: 17, minute: 24, month: 2, year: 2022},
+    start: %{day: 30, hour: 17, minute: 24, month: 2, year: 2022},
+    vehicle: nil
+  }
 
   defp create_shift(_) do
     shift = shift_fixture()

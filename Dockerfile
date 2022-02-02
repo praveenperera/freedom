@@ -55,13 +55,13 @@ COPY --from=deps-getter /app/deps /app/deps
 
 # assets -- install javascript deps
 COPY assets/package.json /app/assets/package.json
-COPY assets/yarn.lock /app/assets/yarn.lock
-RUN cd /app/assets && \
-    yarn install 
+COPY assets/package-lock.json /app/assets/package-lock.json
+RUN cd /app/assets 
 
 # assets -- copy asset files so purgecss doesnt remove css files
 COPY lib/freedom_web/templates/ /app/lib/freedom_web/templates/
 COPY lib/freedom_web/views/ /app/lib/freedom_web/views/
+COPY lib/freedom_web/live/ /app/lib/freedom_web/live/
 
 # assets -- build assets
 COPY assets /app/assets

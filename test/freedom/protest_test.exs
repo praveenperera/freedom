@@ -91,7 +91,12 @@ defmodule Freedom.ProtestTest do
 
     test "update_city/2 with valid data updates the city" do
       city = city_fixture()
-      update_attrs = %{name: "some updated name", province: "some updated province", timezone: "some updated timezone"}
+
+      update_attrs = %{
+        name: "some updated name",
+        province: "some updated province",
+        timezone: "some updated timezone"
+      }
 
       assert {:ok, %City{} = city} = Protest.update_city(city, update_attrs)
       assert city.name == "some updated name"
@@ -135,7 +140,11 @@ defmodule Freedom.ProtestTest do
     end
 
     test "create_shift/1 with valid data creates a shift" do
-      valid_attrs = %{end: ~N[2022-01-31 17:24:00], start: ~N[2022-01-31 17:24:00], vehicle: "some vehicle"}
+      valid_attrs = %{
+        end: ~N[2022-01-31 17:24:00],
+        start: ~N[2022-01-31 17:24:00],
+        vehicle: "some vehicle"
+      }
 
       assert {:ok, %Shift{} = shift} = Protest.create_shift(valid_attrs)
       assert shift.end == ~N[2022-01-31 17:24:00]
@@ -149,7 +158,12 @@ defmodule Freedom.ProtestTest do
 
     test "update_shift/2 with valid data updates the shift" do
       shift = shift_fixture()
-      update_attrs = %{end: ~N[2022-02-01 17:24:00], start: ~N[2022-02-01 17:24:00], vehicle: "some updated vehicle"}
+
+      update_attrs = %{
+        end: ~N[2022-02-01 17:24:00],
+        start: ~N[2022-02-01 17:24:00],
+        vehicle: "some updated vehicle"
+      }
 
       assert {:ok, %Shift{} = shift} = Protest.update_shift(shift, update_attrs)
       assert shift.end == ~N[2022-02-01 17:24:00]

@@ -1,5 +1,5 @@
 const colors = require("tailwindcss/colors");
-const defaultTheme = require('tailwindcss/defaultTheme')
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 const screen = {
   "1/2-screen": "50vh",
@@ -82,7 +82,7 @@ module.exports = {
         "01": "0.1rem",
       },
       fontFamily: {
-        sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+        sans: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
       boxShadow: {},
       zIndex: {

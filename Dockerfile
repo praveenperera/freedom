@@ -1,5 +1,5 @@
 # STEP 1 - DEPS GETTER
-FROM hexpm/elixir:1.10.2-erlang-22.2.7-alpine-3.11.3  AS deps-getter
+FROM hexpm/elixir:1.13.2-erlang-24.2.1-alpine-3.15.0  AS deps-getter
 
 # setup up variables
 ARG APP_NAME
@@ -67,7 +67,7 @@ RUN cd /app/assets && npm i && npm run deploy
 
 ################################################################################
 # STEP 3 - RELEASE BUILDER
-FROM hexpm/elixir:1.10.2-erlang-22.2.7-alpine-3.11.3  AS release-builder
+FROM hexpm/elixir:1.13.2-erlang-24.2.1-alpine-3.15.0  AS release-builder
 
 ENV MIX_ENV=prod
 
@@ -113,15 +113,20 @@ RUN mkdir -p /opt/built &&\
 
 ################################################################################
 ## STEP 4 - FINAL
-FROM alpine:3.11.3
+FROM alpine:3.15.0
 
 ENV MIX_ENV=prod
 
 RUN apk update && \
     apk add --no-cache \
+    libstdc++ \
+    libgcc \
     bash \
     openssl-dev
 
 COPY --from=release-builder /opt/built /app
 WORKDIR /app
-CMD ["/app/freedom/bin/freedom", "start"]
+
+ENV PATH="/app/freedom/bin/:${PATH}"
+
+CMD ["freedom", "start"]

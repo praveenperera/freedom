@@ -135,7 +135,7 @@ defmodule FreedomWeb.ShiftLive.Index do
       |> DateTime.to_date()
 
     days =
-      -1..30
+      0..30
       |> Enum.map(fn i -> Date.add(today, i) end)
       |> Enum.map(fn day -> {Helpers.format(day), Date.to_iso8601(day)} end)
 

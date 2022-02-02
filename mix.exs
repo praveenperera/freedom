@@ -84,7 +84,8 @@ defmodule Freedom.MixProject do
       {:bamboo, "~> 1.4"},
 
       # release
-      {:libcluster, "~> 3.1"}
+      {:libcluster, "~> 3.1"},
+      {:healthchex, "~> 0.2"}
     ]
   end
 

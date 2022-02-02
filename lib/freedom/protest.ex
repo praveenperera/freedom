@@ -90,7 +90,7 @@ defmodule Freedom.Protest do
 
     Enum.find(shifts, fn shift ->
       inclusive_between(shift.start, slot_start_datetime, shift.end, slot_end_datetime)
-    end)
+    end) != nil
   end
 
   defp inclusive_between(search_start, interval_start, search_end, interval_end) do

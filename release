@@ -3,7 +3,6 @@ start=$(date +%s)
 
 APP_NAME="$(grep 'app:' mix.exs | sed -e 's/\[//g' -e 's/ //g' -e 's/app://' -e 's/[:,]//g')"
 REPO_NAME=$APP_NAME
-IMAGE_NAME=$APP_NAME
 APP_VSN="$(grep 'version:' mix.exs | cut -d '"' -f2)"
 
 BRANCH="$(git rev-parse --abbrev-ref HEAD)"
@@ -12,10 +11,10 @@ printf "Building dockerfile for ${APP_NAME}, app: ${APP_NAME}, vsn: ${APP_VSN} \
 
 docker build . --build-arg APP_NAME=$APP_NAME \
                --build-arg APP_VSN=$APP_VSN  \
-               -t ghcr.io/praveenperera/$REPO_NAME/$IMAGE_NAME:$BRANCH 
+               -t ghcr.io/praveenperera/$REPO_NAME:$BRANCH 
 
 printf "Docker build complete  \n\n"
-docker push ghcr.io/praveenperera/$REPO_NAME/$IMAGE_NAME:$BRANCH
+docker push ghcr.io/praveenperera/$REPO_NAME:$BRANCH
 
 printf "Docker push complete  \n\n"
 

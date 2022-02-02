@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: freedom-pg-db-backup
+  namespace: avencera
+spec:
+  schedule: "1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: restore-db
+              image: avencera/postgres-s3-backup
+              envFrom:
+                - secretRef:
+                    name: s3-secret
+                - secretRef:
+                    name: pg-secret
+          restartPolicy: Never

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: freedom-postgresql
+  namespace: avencera
+  annotations: {}
+  labels: {}
+spec:
+  ports:
+    - name: 5432tcp02
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+  selector:
+    app: deployment-freedom-freedom-postgresql
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

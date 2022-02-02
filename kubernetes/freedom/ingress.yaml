@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: freedom-avencera-com
+  namespace: avencera
+  annotations:
+    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 12m
+spec:
+  tls:
+    - hosts:
+        - freedom.avencera.com
+      secretName: avencera-com-tls
+  rules:
+    - host: freedom.avencera.com
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: freedom
+                port:
+                  number: 2384

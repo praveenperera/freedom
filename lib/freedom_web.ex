@@ -30,7 +30,7 @@ defmodule FreedomWeb do
   def view do
     quote do
       use Phoenix.View,
-        root: "lib/Freedom_web/templates",
+        root: "lib/freedom_web/templates",
         namespace: FreedomWeb
 
       # Import convenience functions from controllers

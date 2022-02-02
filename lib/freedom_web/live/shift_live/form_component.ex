@@ -43,6 +43,9 @@ defmodule FreedomWeb.ShiftLive.FormComponent do
     else
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
+
+      _ ->
+        {:noreply, socket}
     end
   end
 end

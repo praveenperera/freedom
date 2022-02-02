@@ -5,7 +5,7 @@ defmodule Freedom.Protest.Shift do
   import Ecto.Query
   alias Freedom.Protest.Shift
 
-  defenum(Vehicle, ["18_wheeler", "4_wheeler", "by_foot"])
+  defenum(Vehicle, ["4_wheeler", "by_foot", "18_wheeler"])
 
   schema "shifts" do
     field(:end, :naive_datetime)

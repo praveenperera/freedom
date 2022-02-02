@@ -3,6 +3,9 @@ defmodule FreedomWeb.Router do
   use Pow.Phoenix.Router
   use Pow.Extension.Phoenix.Router, otp_app: :freedom
 
+  forward "/health/live", Healthchex.Probes.Liveness
+  forward "/health/ready", Healthchex.Probes.Readiness, probe: &Freedom.Repo.db_ready?/0
+
   pipeline :browser do
     plug(:accepts, ["html"])
     plug(:fetch_session)

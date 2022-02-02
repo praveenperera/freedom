@@ -37,3 +37,7 @@ npm-debug.log
 assets/yarn-error.log
 
 config/dev.secret.exs
+
+**/**/secret.yaml
+**/**/*-secret.yaml
+**/**/**.secret.yaml

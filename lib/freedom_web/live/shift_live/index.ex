@@ -4,6 +4,8 @@ defmodule FreedomWeb.ShiftLive.Index do
   alias Freedom.Protest
   alias Freedom.Protest.Shift
   alias FreedomWeb.Credentials
+  alias Phoenix.LiveView.JS
+  alias FreedomWeb.Live.ShiftLive.Helpers
 
   @interval 3
 
@@ -33,6 +35,8 @@ defmodule FreedomWeb.ShiftLive.Index do
     socket =
       socket
       |> assign(
+        booking_index: nil,
+        user_shifts: [],
         shifts: %{},
         max_shifts: 1,
         slots: slots,
@@ -53,7 +57,8 @@ defmodule FreedomWeb.ShiftLive.Index do
       socket
       |> assign(current_path: path)
       |> load_city(params["city"])
-      |> set_date(params["date"])
+      |> set_day(params["day"])
+      |> load_user_shifts()
       |> load_total_shifts()
       |> apply_action(socket.assigns.live_action, params)
 
@@ -82,25 +87,42 @@ defmodule FreedomWeb.ShiftLive.Index do
     assign(socket, :city, Protest.get_city_by_slug!(city))
   end
 
+  def load_user_shifts(socket) do
+    assigns = socket.assigns
+
+    if assigns.current_user do
+      user_shifts =
+        Protest.get_shifts_for_user_and_day(assigns.current_user.id, assigns.city.id, assigns.day)
+
+      socket
+      |> assign(
+        :user_shifts,
+        user_shifts
+      )
+    else
+      socket
+    end
+  end
+
   def load_total_shifts(socket) do
     socket
     |> assign(
       :total_shifts,
-      Protest.total_shifts_for_day(socket.assigns.city.id, socket.assigns.date)
+      Protest.total_shifts_for_day(socket.assigns.city.id, socket.assigns.day)
     )
   end
 
-  def set_date(socket, nil) do
-    date =
+  def set_day(socket, nil) do
+    day =
       socket.assigns[:city].timezone
       |> DateTime.now!(Tzdata.TimeZoneDatabase)
       |> DateTime.to_date()
 
-    assign(socket, :date, date)
+    assign(socket, :day, day)
   end
 
-  def set_date(socket, date) do
-    assign(socket, :date, DateTime.parse(date))
+  def set_day(socket, day) do
+    assign(socket, :day, DateTime.parse(day))
   end
 
   @impl true
@@ -111,15 +133,23 @@ defmodule FreedomWeb.ShiftLive.Index do
     {:noreply, socket}
   end
 
+  def handle_event("book", %{"index" => index}, socket) do
+    socket =
+      socket
+      |> assign(:booking_index, String.to_integer(index))
+
+    {:noreply, socket}
+  end
+
   @impl true
   def handle_info({:get_shifts, slots}, socket) do
     city_id = socket.assigns.city.id
-    date = socket.assigns.date
+    day = socket.assigns.day
     liveview = self()
 
     Enum.each(slots, fn {index, %{start: start, end: last}} ->
       Task.start(fn ->
-        shifts = Protest.get_shift_between(city_id, date, start, last)
+        shifts = Protest.get_shift_between(city_id, day, start, last)
 
         send(liveview, {:received_shifts, {index, shifts}})
       end)
@@ -146,6 +176,4 @@ defmodule FreedomWeb.ShiftLive.Index do
 
     {:noreply, socket}
   end
-
-  def format(%Time{} = time), do: Calendar.strftime(time, "%I:%M%p")
 end

@@ -31,9 +31,27 @@ defmodule Freedom.Protest.Shift do
     |> where(city_id: ^city_id)
   end
 
+  def shifts_for_day(query \\ Shift, %Date{} = day) do
+    start_datetime = DateTime.new!(day, Time.new!(0, 0, 0))
+    end_datetime = DateTime.new!(day, Time.new!(23, 59, 59))
+
+    query
+    |> shifts_between(start_datetime, end_datetime)
+  end
+
   def shifts_between(query \\ Shift, start_datetime, end_datetime) do
     query
     |> where([s], s.start >= ^start_datetime)
     |> where([s], s.end <= ^end_datetime)
   end
+
+  def vehicles_select() do
+    Vehicle.__valid_values__()
+    |> Enum.filter(&is_binary/1)
+    |> Enum.map(fn name -> {map_to_human_vehicle_name(name), name} end)
+  end
+
+  defp map_to_human_vehicle_name("18_wheeler"), do: "18 Wheeler"
+  defp map_to_human_vehicle_name("4_wheeler"), do: "4 Wheeler (Truck, Van, Car etc...)"
+  defp map_to_human_vehicle_name("by_foot"), do: "On Foot"
 end

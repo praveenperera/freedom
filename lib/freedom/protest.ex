@@ -31,12 +31,18 @@ defmodule Freedom.Protest do
 
   def get_shift!(id), do: Repo.get!(Shift, id)
 
-  def total_shifts_for_day(city_id, %Date{} = date) do
-    start_datetime = DateTime.new!(date, Time.new!(0, 0, 0))
-    end_datetime = DateTime.new!(date, Time.new!(23, 59, 59))
-
+  def get_shifts_for_user_and_day(user_id, city_id, %Date{} = day) do
     Shift
-    |> Shift.shifts_between(start_datetime, end_datetime)
+    |> Shift.shifts_for_day(day)
+    |> Shift.in_city(city_id)
+    |> where(user_id: ^user_id)
+    |> Repo.all()
+  end
+
+  def total_shifts_for_day(city_id, %Date{} = day) do
+    Shift
+    |> Shift.shifts_for_day(day)
+    |> Shift.in_city(city_id)
     |> select([s], count(s.id))
     |> Repo.one()
   end
@@ -68,9 +74,28 @@ defmodule Freedom.Protest do
     |> Repo.insert()
   end
 
+  def change_shift(%Shift{} = shift, attrs \\ %{}) do
+    Shift.changeset(shift, attrs)
+  end
+
   def delete_shift(%Shift{} = shift) do
     Repo.delete(shift)
   end
 
   def get_city_by_slug!(slug), do: Repo.get_by!(City, slug: slug)
+
+  def slot_already_booked?(day, slot, shifts) do
+    slot_start_datetime = NaiveDateTime.new!(day, slot.start)
+    slot_end_datetime = NaiveDateTime.new!(day, slot.end)
+
+    Enum.find(shifts, fn shift ->
+      inclusive_between(shift.start, slot_start_datetime, shift.end, slot_end_datetime)
+    end)
+  end
+
+  defp inclusive_between(search_start, interval_start, search_end, interval_end) do
+    (Calendar.NaiveDateTime.after?(search_start, interval_start) &&
+       Calendar.NaiveDateTime.before?(search_end, interval_end)) ||
+      (search_start == interval_start && search_end == interval_end)
+  end
 end

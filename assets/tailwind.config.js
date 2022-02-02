@@ -65,6 +65,7 @@ const percent = {
 module.exports = {
   mode: "jit",
   content: [
+    "../lib/freedom_web/live/**/*.ex",
     "../**/*.html.eex",
     "../**/*.html.leex",
     "../**/*.html.heex",

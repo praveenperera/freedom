@@ -52,6 +52,7 @@ defmodule Freedom.MixProject do
 
       # utils
       {:typed_struct, "~> 0.2.1"},
+      {:calendar, "~> 1.0.0"},
 
       # apis
       {:certifi, "~> 2.4"},

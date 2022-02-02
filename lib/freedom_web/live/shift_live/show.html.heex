@@ -1,14 +1,5 @@
 <h1>Show Shift</h1>
 
-<%= if @live_action in [:edit] do %>
-  <%= live_modal FreedomWeb.ShiftLive.FormComponent,
-    id: @shift.id,
-    title: @page_title,
-    action: @live_action,
-    shift: @shift,
-    return_to: Routes.shift_show_path(@socket, :show, @shift) %>
-<% end %>
-
 <ul>
 
   <li>

@@ -29,37 +29,39 @@
   <%= for {index, slot} <- @slots do %>
     <% count = Map.get(@shifts, index, []) |> Enum.count() %>
     <% percentage = min( ((count / @max_shifts) * 100), 86)  %>
-    <div class="flex items-center mb-6 w-full">
-      <div class="w-2/12">
-        <%= Helpers.format(slot.start) %> — <%= Helpers.format(slot.end) %>
+    <div class="flex flex-wrap items-center w-full mb-6">
+      <div class="w-full mt-4 mb-2 sm:mt-0 sm:mb-0 sm:w-2/12">
+        <p class="text-base sm:text-sm lg:text-base">
+          <%= Helpers.format(slot.start) %> — <%= Helpers.format(slot.end) %>
+        </p>
       </div> 
-      <div class="flex w-10/12"> 
+      <div class="flex w-full sm:w-10/12"> 
         <%= if count > 0 do %>
-          <div style={"width: #{percentage}%"} class="flex justify-center items-center bg-green-500">
-            <div class="flex">
-              <p class="text-sm font-bold text-white">
+          <div style={"width: #{percentage}%"} class="flex items-center justify-center px-2 py-2 mr-2 bg-green-500">
+            <div class="flex flex-wrap">
+              <p class="mr-1 text-xs font-bold text-white sm:text-sm">
                 <%= Map.get(@shifts, index, []) |> Enum.count() %>
               </p>
-              <span class="mt-0.5 ml-1 text-xs text-gray-100">
+              <span class="sm:mt-0.5 text-xs text-gray-100">
                 (people signed up)
               </span>
             </div>
           </div>
         <% end %>
-        <div class="ml-2">
+        <div class="">
           <%= if @current_user do %>
             <%= if Helpers.slot_already_booked?(@day, slot, @user_shifts) do %>
                 <button 
                 type="button" 
-                class="inline-flex items-center py-2 px-3 text-sm font-medium leading-4 text-red-700 bg-gray-100 rounded-md border border-transparent cursor-not-allowed focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none"
+                class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-red-700 bg-gray-100 border border-transparent rounded-md cursor-not-allowed focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:outline-none"
                 disabled={true}
                 >
-                  Already Book
+                  Already Booked
               </button>
             <% else %>   
               <button 
                 type="button" 
-                class="inline-flex items-center py-2 px-3 text-sm font-medium leading-4 text-indigo-700 bg-indigo-100 rounded-md border border-transparent hover:bg-indigo-200 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none"
+                class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-indigo-700 bg-indigo-100 border border-transparent rounded-md hover:bg-indigo-200 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none"
                 phx-click={
                   JS.push("book")
                   |> JS.show(to: "#modal", transition: "fade-in")

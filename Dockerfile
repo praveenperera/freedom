@@ -41,13 +41,10 @@ RUN mix compile
 
 ################################################################################
 # STEP 2 - ASSET BUILDER
-FROM node:10 AS asset-builder
+FROM node:14 AS asset-builder
 
 RUN mkdir /app
 WORKDIR /app
-
-# install latest version of yarn
-RUN npm i -g yarn --force
 
 COPY --from=deps-getter /app/assets /app/assets
 COPY --from=deps-getter /app/priv /app/priv
@@ -65,7 +62,7 @@ COPY lib/freedom_web/live/ /app/lib/freedom_web/live/
 
 # assets -- build assets
 COPY assets /app/assets
-RUN cd /app/assets && yarn deploy  
+RUN cd /app/assets && npm i && npm run deploy  
 
 
 ################################################################################

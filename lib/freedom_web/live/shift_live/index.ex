@@ -37,6 +37,8 @@ defmodule FreedomWeb.ShiftLive.Index do
       |> assign(
         booking_index: nil,
         user_shifts: [],
+        day_selection: false,
+        days: [],
         shifts: %{},
         max_shifts: 1,
         slots: slots,
@@ -58,6 +60,7 @@ defmodule FreedomWeb.ShiftLive.Index do
       |> assign(current_path: path)
       |> load_city(params["city"])
       |> set_day(params["day"])
+      |> set_days()
       |> load_user_shifts()
       |> load_total_shifts()
       |> apply_action(socket.assigns.live_action, params)
@@ -118,11 +121,25 @@ defmodule FreedomWeb.ShiftLive.Index do
       |> DateTime.now!(Tzdata.TimeZoneDatabase)
       |> DateTime.to_date()
 
-    assign(socket, :day, day)
+    assign(socket, day: day)
   end
 
   def set_day(socket, day) do
-    assign(socket, :day, DateTime.parse(day))
+    assign(socket, :day, Date.from_iso8601!(day))
+  end
+
+  def set_days(socket) do
+    today =
+      socket.assigns[:city].timezone
+      |> DateTime.now!(Tzdata.TimeZoneDatabase)
+      |> DateTime.to_date()
+
+    days =
+      -1..30
+      |> Enum.map(fn i -> Date.add(today, i) end)
+      |> Enum.map(fn day -> {Helpers.format(day), Date.to_iso8601(day)} end)
+
+    assign(socket, days: days)
   end
 
   @impl true
@@ -133,6 +150,31 @@ defmodule FreedomWeb.ShiftLive.Index do
     {:noreply, socket}
   end
 
+  @impl true
+  def handle_event("activate-day-selection", _, socket) do
+    {:noreply, assign(socket, day_selection: true)}
+  end
+
+  @impl true
+  def handle_event("deactivate-day-selection", _, socket) do
+    {:noreply, assign(socket, day_selection: false)}
+  end
+
+  def handle_event(
+        "save-day-selection",
+        %{"day-selection-form" => %{"day" => day}},
+        socket
+      ) do
+    socket =
+      socket
+      |> push_redirect(
+        to: Routes.shift_index_path(socket, :index, socket.assigns.city.slug, day: day)
+      )
+
+    {:noreply, socket}
+  end
+
+  @impl true
   def handle_event("book", %{"index" => index}, socket) do
     socket =
       socket

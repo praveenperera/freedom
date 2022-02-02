@@ -3,9 +3,26 @@
     <h1 class="text-3xl font-bold leading-tight text-gray-900">
       <%= @city.name %>
     </h1>
-    <h2 class="mt-1">
-      <%= Calendar.strftime(@day, "%A – %B %-d") %>
-    </h2>
+    <div phx-click="activate-day-selection" phx-click-away="deactivate-day-selection">
+      <%= if @day_selection do %>
+        <.form
+          let={f}
+          for={:"day-selection-form"}
+          id="day-selection-form"
+          phx-change="save-day-selection"
+          phx-submit="save-day-selection">
+
+            <div class="py-4">
+              <%= select f, :day, @days, value: @day %>
+            </div>
+
+        </.form>
+      <% else %>
+        <h2 class="mt-1 text-blue-600 cursor-pointer">
+          <%= Helpers.format(@day) %>
+        </h2>
+      <% end %>
+    </div>
   </div>
 
   <div class="flex flex-wrap mt-10">

@@ -81,8 +81,11 @@ defmodule FreedomWeb.ShiftLive.Index do
   end
 
   defp apply_action(socket, :index, params) do
+    city = socket.assigns.city.name
+    day = socket.assigns.day
+
     socket
-    |> assign(:page_title, "Listing Shifts")
+    |> assign(:page_title, "Freedom - #{city} Slots for #{day}")
     |> assign(:shift, nil)
   end
 

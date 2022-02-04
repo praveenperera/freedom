@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: freedom-postgres
-  namespace: avencera
+  namespace: operationbearhug
 spec:
   storageClassName: do-block-storage
   accessModes:

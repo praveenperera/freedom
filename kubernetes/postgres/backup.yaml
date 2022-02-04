@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: freedom-pg-db-backup
-  namespace: avencera
+  namespace: operationbearhug
 spec:
   schedule: "1 * * * *"
   jobTemplate:
@@ -10,7 +10,7 @@ spec:
       template:
         spec:
           containers:
-            - name: restore-db
+            - name: db-backup
               image: avencera/postgres-s3-backup
               envFrom:
                 - secretRef:

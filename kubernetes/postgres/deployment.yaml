@@ -5,7 +5,7 @@ metadata:
   labels:
     app: deployment-freedom-freedom-postgresql
   name: freedom-postgresql
-  namespace: avencera
+  namespace: operationbearhug
 spec:
   progressDeadlineSeconds: 600
   replicas: 1

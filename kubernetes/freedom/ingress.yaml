@@ -1,18 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: freedom-avencera-com
-  namespace: avencera
+  name: freedom-operationbearhug-ca
+  namespace: operationbearhug
   annotations:
     nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: 12m
 spec:
   tls:
     - hosts:
-        - freedom.avencera.com
-      secretName: avencera-com-tls
+        - operationbearhug.ca
+      secretName: operationbearhug-ca-tls
   rules:
-    - host: freedom.avencera.com
+    - host: operationbearhug.ca
       http:
         paths:
           - pathType: ImplementationSpecific

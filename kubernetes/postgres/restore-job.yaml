@@ -2,13 +2,13 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: restore-db
-  namespace: avencera
+  namespace: operationbearhug
 spec:
   template:
     spec:
       containers:
         - name: restore-db
-          image: avencera/postgres-s3-restore
+          image: operationbearhug/postgres-s3-restore
           envFrom:
             - secretRef:
                 name: s3-secret

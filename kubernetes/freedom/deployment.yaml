@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: freedom
+  namespace: operationbearhug
   annotations: {}
   labels:
     app: deployment-freedom-freedom
-  name: freedom
-  namespace: avencera
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
@@ -26,10 +26,8 @@ spec:
     spec:
       containers:
         - env:
-            - name: SEED_DUMMY_DATA
-              value: "true"
             - name: DOMAIN_NAME
-              value: freedom.avencera.com
+              value: operationbearhug.ca
             - name: ENV
               value: prod
             - name: MIX_ENV

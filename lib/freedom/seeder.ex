@@ -3,19 +3,29 @@ defmodule Freedom.Seeder do
   alias Freedom.Repo
 
   def run() do
-    city =
+    cities = [
       get_or_update(%City{
         name: "Edmonton",
         province: "Alberta",
         timezone: "America/Edmonton",
         slug: "edmonton"
+      }),
+      get_or_update(%City{
+        name: "Coutts",
+        province: "Alberta",
+        timezone: "America/Edmonton",
+        slug: "coutts"
       })
+    ]
 
     if System.get_env("SEED_DUMMY_DATA") do
       IO.puts("SEED_DUMMY_DATA set, seeding data")
 
       day = DateTime.utc_now() |> DateTime.to_date()
-      seed_random_shifts_for_day(day, city)
+
+      for city <- cities do
+        seed_random_shifts_for_day(day, city)
+      end
     end
   end
 

@@ -7,7 +7,7 @@ defmodule FreedomWeb.ShiftLive.Index do
   alias Phoenix.LiveView.JS
   alias FreedomWeb.Live.ShiftLive.Helpers
 
-  @interval 3
+  @interval 12
 
   @impl true
   def mount(_params, session, socket) do

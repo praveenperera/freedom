@@ -21,3 +21,10 @@ spec:
                 name: freedom
                 port:
                   number: 2384
+          - path: /updates
+            pathType: Prefix
+            backend:
+              service:
+                name: blog
+                port:
+                  number: 2368

@@ -42,8 +42,8 @@ defmodule FreedomWeb.Router do
   scope "/", FreedomWeb do
     pipe_through([:browser])
 
-    get("/", PageController, :edmonton)
-    get("/cities", PageController, :edmonton)
+    get("/", PageController, :coutts)
+    get("/cities", PageController, :coutts)
 
     live("/cities/:city", ShiftLive.Index, :index)
     live("/cities/:city/new", ShiftLive.Index, :new)
